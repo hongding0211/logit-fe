@@ -2,12 +2,12 @@
   <div class="search-container">
     <a-space>
       <a-select
-          v-model:value="conditions.params.system"
-          :options="systemOptions"
-          placeholder="System"
-          class="input"
-          allow-clear
-          @change="handleChangeSelect"
+        v-model:value="conditions.params.system"
+        :options="systemOptions"
+        placeholder="System"
+        class="input"
+        allow-clear
+        @change="handleChangeSelect"
       />
     </a-space>
     <a-space>
@@ -16,7 +16,7 @@
     </a-space>
   </div>
 
-  <a-divider style="margin: 8px 0;" />
+  <a-divider style="margin: 8px 0" />
 
   <div class="table-container">
     <a-table
@@ -27,13 +27,19 @@
     >
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'time'">
-          <span>{{dayjs(record.time).format('YYYY/MM/DD HH:mm:ss')}}</span>
+          <span>{{ dayjs(record.time).format('YYYY/MM/DD HH:mm:ss') }}</span>
         </template>
         <template v-else-if="column.key === 'content'">
-          <span class="content" @click="handleClickContent(record.content)">{{record.content}}</span>
+          <span class="content" @click="handleClickContent(record.content)">{{
+            record.content
+          }}</span>
         </template>
         <template v-else-if="column.key === 'actions'">
-          <a href="javascript:void(0)" @click="handleClickContent(record.content)">查看</a>
+          <a
+            href="javascript:void(0)"
+            @click="handleClickContent(record.content)"
+            >查看</a
+          >
         </template>
       </template>
     </a-table>
@@ -45,7 +51,7 @@
     v-model:page-size="conditions.params.size"
     class="pagination"
     show-size-changer
-    :show-total="total => `共 ${total} 项`"
+    :show-total="(total) => `共 ${total} 项`"
     @change="handleChangePage"
     @showSizeChange="handleChangeSize"
   />
@@ -59,13 +65,12 @@
   >
     <div class="monaco-editor"></div>
   </a-drawer>
-
 </template>
 
 <script setup>
-import {useLogs, useSystems} from "@/compose/compose";
-import {computed, nextTick, reactive, ref} from "vue";
-import {tableColumns} from './config'
+import { useLogs, useSystems } from '@/compose/compose'
+import { computed, nextTick, reactive, ref } from 'vue'
+import { tableColumns } from './config'
 import dayjs from 'dayjs'
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.main.js'
 
@@ -84,10 +89,14 @@ const conditions = reactive({
 const systems = useSystems()
 const [logs, totalLogs, fetchLogs] = useLogs(conditions)
 
-const systemOptions = computed(() => systems.value?.length > 0 && systems.value.map(s => ({
-  value: s,
-  label: s,
-})))
+const systemOptions = computed(
+  () =>
+    systems.value?.length > 0 &&
+    systems.value.map((s) => ({
+      value: s,
+      label: s,
+    }))
+)
 
 function handleChangeSelect(value) {
   value && fetchLogs()
@@ -128,7 +137,6 @@ function handleChangeSize(_, size) {
   conditions.params.size = size
   fetchLogs()
 }
-
 </script>
 
 <style lang="stylus" scoped>

@@ -1,8 +1,8 @@
 <script setup>
-import {RouterView} from "vue-router"
-import BlankPageContainer from "@/components/BlankPageContainer.vue"
-import {onMounted, ref} from "vue";
-import {SSO_HOST, SSO_REDIRECT} from "../config"
+import { RouterView } from 'vue-router'
+import BlankPageContainer from '@/components/BlankPageContainer.vue'
+import { onMounted, ref } from 'vue'
+import { SSO_HOST, SSO_REDIRECT } from '../config'
 
 const userInfo = ref(null)
 
@@ -11,16 +11,18 @@ function getUserInfo() {
   if (!authToken) {
     window.location.href = SSO_REDIRECT
   }
-  fetch(`${SSO_HOST}/api/userInfo?authToken=${authToken}`).then(v => {
-    return v.json()
-  }).then(v => {
-    if (v?.success) {
-      userInfo.value = v.data
-      if (location.search) {
-        window.location.href = location.origin
+  fetch(`${SSO_HOST}/api/userInfo?authToken=${authToken}`)
+    .then((v) => {
+      return v.json()
+    })
+    .then((v) => {
+      if (v?.success) {
+        userInfo.value = v.data
+        if (location.search) {
+          window.location.href = location.origin
+        }
       }
-    }
-  })
+    })
 }
 
 function handleLogout() {
@@ -44,16 +46,19 @@ onMounted(() => {
       body: JSON.stringify({
         ticket,
       }),
-    }).then(res => res.json()).then(res => {
-      if (res?.success === true) {
-        localStorage.setItem('auth-token', res.data.authToken)
-        getUserInfo()
-      } else {
-        throw new Error('wrong ticket')
-      }
-    }).catch(() => {
-      window.location.href = `${global.ssoHost}?${encodeURIComponent(`?client=${global.host}`)}`
     })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res?.success === true) {
+          localStorage.setItem('auth-token', res.data.authToken)
+          getUserInfo()
+        } else {
+          throw new Error('wrong ticket')
+        }
+      })
+      .catch(() => {
+        window.location.href = SSO_REDIRECT
+      })
   } else {
     getUserInfo()
   }
@@ -64,11 +69,7 @@ onMounted(() => {
   <a-layout>
     <a-layout-header class="header">
       <div class="header">
-        <a-menu
-            theme="dark"
-            mode="horizontal"
-            :style="{ lineHeight: '64px' }"
-        >
+        <a-menu theme="dark" mode="horizontal" :style="{ lineHeight: '64px' }">
           <a-menu-item key="1">Logs</a-menu-item>
         </a-menu>
         <a-popover>
@@ -76,16 +77,18 @@ onMounted(() => {
             <a-button type="text" @click="handleLogout">登出</a-button>
           </template>
           <a-space size="middle">
-            <span class="name">{{userInfo?.name}}</span>
+            <span class="name">{{ userInfo?.name }}</span>
             <img class="avatar" alt="avatar" :src="userInfo?.avatar" />
           </a-space>
         </a-popover>
       </div>
     </a-layout-header>
     <BlankPageContainer title="Logs">
-      <RouterView/>
+      <RouterView />
     </BlankPageContainer>
-    <footer style="position: absolute; bottom: 8px; width: 100%; text-align: center;">
+    <footer
+      style="position: absolute; bottom: 8px; width: 100%; text-align: center"
+    >
       Copyright © {{ new Date().getFullYear() }} hong97.ltd
     </footer>
   </a-layout>

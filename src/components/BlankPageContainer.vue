@@ -1,12 +1,9 @@
 <template>
   <div class="blank-page-container">
-    <div
-      v-if="props.title !== undefined"
-      class="title"
-    >
+    <div v-if="props.title !== undefined" class="title">
       <h3>{{ props.title }}</h3>
 
-      <a-divider style="margin: 16px 0;"/>
+      <a-divider style="margin: 16px 0" />
     </div>
 
     <div class="content">
@@ -16,9 +13,9 @@
 </template>
 
 <script lang="ts" setup>
-  const props = defineProps<{
-    title?: string
-  }>()
+const props = defineProps<{
+  title?: string
+}>()
 </script>
 
 <style lang="stylus" scoped>
@@ -39,5 +36,4 @@
 
   .content
     padding 16px 20px 20px 20px
-
 </style>

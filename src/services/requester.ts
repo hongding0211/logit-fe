@@ -1,9 +1,18 @@
-import {IApi} from "./types";
+import { IApi } from './types'
 
-function resolveParams(url: string, params: Record<string, any> | undefined): string {
+function resolveParams(
+  url: string,
+  params: Record<string, any> | undefined
+): string {
   const authToken = localStorage.getItem('auth-token')
-  const p = {...params, authToken,}
-  return url + '?' + Object.keys(p).map(k => `${k}=${p[k]}`).join('&')
+  const p = { ...params, authToken }
+  return (
+    url +
+    '?' +
+    Object.keys(p)
+      .map((k) => `${k}=${p[k]}`)
+      .join('&')
+  )
 }
 
 export default class Requester<T extends IApi> {
@@ -19,8 +28,8 @@ export default class Requester<T extends IApi> {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(payload.body)
-    }).then(res => res.json())
+      body: JSON.stringify(payload.body),
+    }).then((res) => res.json())
   }
 
   patch(payload: T['IReq']): Promise<T['IRes']> {
@@ -29,13 +38,13 @@ export default class Requester<T extends IApi> {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(payload.body)
-    }).then(res => res.json())
+      body: JSON.stringify(payload.body),
+    }).then((res) => res.json())
   }
 
   get(payload: T['IReq']): Promise<T['IRes']> {
     return fetch(resolveParams(this.url, payload.params), {
       method: 'GET',
-    }).then(res => res.json())
+    }).then((res) => res.json())
   }
 }

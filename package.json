@@ -10,6 +10,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@babel/types": "^7.20.2",
     "ant-design-vue": "^3.2.15",
     "dayjs": "^1.11.6",
     "monaco-editor": "^0.34.1",

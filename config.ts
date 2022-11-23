@@ -8,4 +8,5 @@ export const APIS = {
 export const SECRET = 'linmeihuashiyigemeimao'
 
 export const SSO_HOST = 'https://hong97.ltd/sso'
-export const SSO_REDIRECT = SSO_HOST + '/login?client=' + encodeURIComponent(`${document.location.href}`)
+export const SSO_REDIRECT =
+  SSO_HOST + '/login?client=' + encodeURIComponent(`${document.location.href}`)
