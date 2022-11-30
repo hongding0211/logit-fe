@@ -19,7 +19,6 @@ declare module '@vue/runtime-core' {
     APopover: typeof import('ant-design-vue/es')['Popover']
     ASelect: typeof import('ant-design-vue/es')['Select']
     ASpace: typeof import('ant-design-vue/es')['Space']
-    ASubMenu: typeof import('ant-design-vue/es')['SubMenu']
     ATable: typeof import('ant-design-vue/es')['Table']
     BlankPageContainer: typeof import('./src/components/BlankPageContainer.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

@@ -21,7 +21,7 @@ const props = defineProps<{
 <style lang="stylus" scoped>
 .blank-page-container
   position relative
-  height calc(100vh - 155px)
+  height calc(100vh - 100px)
   width 100%
   margin 20px
   overflow auto

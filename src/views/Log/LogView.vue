@@ -151,7 +151,7 @@ function handleChangeSize(_, size) {
     width 240px
 
 .table-container
-  height calc(100vh - 398px)
+  height calc(100vh - 310px)
   overflow auto
 
   .content

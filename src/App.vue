@@ -76,9 +76,16 @@ onMounted(() => {
 </script>
 
 <template>
-  <a-layout>
+  <a-layout style="height: 100vh">
     <a-layout-header class="header">
-      <div class="logo">Log IT</div>
+      <div class="logo">
+        <img
+          src="../public/logo.png"
+          alt="png"
+          style="width: 32px; margin-right: 24px"
+        />
+        <span>Log IT</span>
+      </div>
       <div class="header">
         <a-menu
           v-model:selected-keys="selectedMenu"
@@ -103,7 +110,10 @@ onMounted(() => {
       </div>
     </a-layout-header>
     <a-layout>
-      <a-layout-sider width="200" style="background: #fff; padding: 8px 0">
+      <a-layout-sider
+        width="200"
+        style="background: #fff; padding: 8px 0; position: relative"
+      >
         <a-menu
           v-model:selected-keys="selectedMenu"
           @click="handleClickMenu"
@@ -117,6 +127,7 @@ onMounted(() => {
             {{ m.name }}
           </a-menu-item>
         </a-menu>
+        <span class="footer">Log IT | hong97.ltd</span>
       </a-layout-sider>
       <BlankPageContainer
         :title="menus.find((e) => e.path === selectedMenu[0]).name"
@@ -124,11 +135,6 @@ onMounted(() => {
         <RouterView />
       </BlankPageContainer>
     </a-layout>
-    <footer
-      style="position: absolute; bottom: 8px; width: 100%; text-align: center"
-    >
-      Copyright © {{ new Date().getFullYear() }} hong97.ltd
-    </footer>
   </a-layout>
 </template>
 
@@ -150,4 +156,12 @@ onMounted(() => {
     width 32px
     height 32px
     border-radius 100%
+
+.footer
+  position absolute
+  bottom 8px
+  width 100%
+  text-align center
+  font-size 12px
+  color #b1b1b1
 </style>
