@@ -6,7 +6,6 @@
         :options="systemOptions"
         placeholder="System"
         class="input"
-        allow-clear
         @change="handleChangeSelect"
       />
     </a-space>
@@ -107,7 +106,9 @@ function handleSearch() {
 }
 
 function handleReset() {
-  conditions.system = undefined
+  conditions.params.system = undefined
+  logs.value = []
+  totalLogs.value = 0
 }
 
 function handleClickContent(content) {

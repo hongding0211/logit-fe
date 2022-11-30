@@ -22,6 +22,7 @@ const props = defineProps<{
 .blank-page-container
   position relative
   height calc(100vh - 155px)
+  width 100%
   margin 20px
   overflow auto
   background-color #fff

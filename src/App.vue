@@ -1,10 +1,14 @@
 <script setup>
-import { RouterView } from 'vue-router'
+import { RouterView, useRouter } from 'vue-router'
 import BlankPageContainer from '@/components/BlankPageContainer.vue'
 import { onMounted, ref } from 'vue'
 import { SSO_HOST, SSO_REDIRECT } from '../config'
+import { menus } from '@/router'
 
 const userInfo = ref(null)
+const selectedMenu = ref(['/'])
+
+const router = useRouter()
 
 function getUserInfo() {
   const authToken = localStorage.getItem('auth-token')
@@ -19,7 +23,7 @@ function getUserInfo() {
       if (v?.success) {
         userInfo.value = v.data
         if (location.search) {
-          window.location.href = location.origin
+          window.location.search = ''
         }
       }
     })
@@ -28,6 +32,12 @@ function getUserInfo() {
 function handleLogout() {
   localStorage.removeItem('auth-token')
   window.location.href = SSO_REDIRECT
+}
+
+function handleClickMenu({ key }) {
+  router.push({
+    path: key,
+  })
 }
 
 onMounted(() => {
@@ -68,9 +78,18 @@ onMounted(() => {
 <template>
   <a-layout>
     <a-layout-header class="header">
+      <div class="logo">Log IT</div>
       <div class="header">
-        <a-menu theme="dark" mode="horizontal" :style="{ lineHeight: '64px' }">
-          <a-menu-item key="1">Logs</a-menu-item>
+        <a-menu
+          v-model:selected-keys="selectedMenu"
+          @click="handleClickMenu"
+          theme="dark"
+          mode="horizontal"
+          :style="{ lineHeight: '64px', width: '100%' }"
+        >
+          <a-menu-item v-for="m in menus" :key="m.path">{{
+            m.name
+          }}</a-menu-item>
         </a-menu>
         <a-popover>
           <template #content>
@@ -83,9 +102,28 @@ onMounted(() => {
         </a-popover>
       </div>
     </a-layout-header>
-    <BlankPageContainer title="Logs">
-      <RouterView />
-    </BlankPageContainer>
+    <a-layout>
+      <a-layout-sider width="200" style="background: #fff; padding: 8px 0">
+        <a-menu
+          v-model:selected-keys="selectedMenu"
+          @click="handleClickMenu"
+          mode="inline"
+          style="height: 100%"
+        >
+          <a-menu-item v-for="m in menus" :key="m.path">
+            <template #icon>
+              <component :is="m.icon" />
+            </template>
+            {{ m.name }}
+          </a-menu-item>
+        </a-menu>
+      </a-layout-sider>
+      <BlankPageContainer
+        :title="menus.find((e) => e.path === selectedMenu[0]).name"
+      >
+        <RouterView />
+      </BlankPageContainer>
+    </a-layout>
     <footer
       style="position: absolute; bottom: 8px; width: 100%; text-align: center"
     >
@@ -95,6 +133,11 @@ onMounted(() => {
 </template>
 
 <style lang="stylus" scoped>
+.logo
+  color #fff
+  width 200px
+  font-size 18px
+
 .header
   display flex
   justify-content space-between

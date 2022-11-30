@@ -1,4 +1,4 @@
-export const baseUrl = 'http://127.0.0.1:4000'
+export const baseUrl = 'https://hong97.ltd/log'
 
 export const APIS = {
   GET_API_SYSTEMS: `${baseUrl}/api/systems`,
